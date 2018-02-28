@@ -122,7 +122,8 @@ angular.module('ui.bootstrap.pagination', ['ui.bootstrap.paging', 'ui.bootstrap.
   forceEllipses: false
 })
 
-.directive('uibPagination', ['$parse', 'uibPaginationConfig', function($parse, uibPaginationConfig) {
+.directive('uibPagination', ['$parse', 'uibPaginationConfig', 'uibTemplatePath', 
+    function($parse, uibPaginationConfig, uibTemplatePath) {
   return {
     scope: {
       totalItems: '=',
@@ -137,7 +138,7 @@ angular.module('ui.bootstrap.pagination', ['ui.bootstrap.paging', 'ui.bootstrap.
     controller: 'UibPaginationController',
     controllerAs: 'pagination',
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/pagination/pagination.html';
+      return attrs.templateUrl || (uibTemplatePath + 'pagination/pagination.html');
     },
     link: function(scope, element, attrs, ctrls) {
       element.addClass('pagination');

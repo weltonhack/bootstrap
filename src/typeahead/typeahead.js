@@ -601,7 +601,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     };
   })
 
-  .directive('uibTypeaheadPopup', ['$$debounce', function($$debounce) {
+  .directive('uibTypeaheadPopup', ['$$debounce', 'uibTemplatePath', function($$debounce, uibTemplatePath) {
     return {
       scope: {
         matches: '=',
@@ -615,7 +615,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
       },
       replace: true,
       templateUrl: function(element, attrs) {
-        return attrs.popupTemplateUrl || 'uib/template/typeahead/typeahead-popup.html';
+        return attrs.popupTemplateUrl || (uibTemplatePath + 'typeahead/typeahead-popup.html');
       },
       link: function(scope, element, attrs) {
         scope.templateUrl = attrs.templateUrl;
@@ -648,7 +648,8 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
     };
   }])
 
-  .directive('uibTypeaheadMatch', ['$templateRequest', '$compile', '$parse', function($templateRequest, $compile, $parse) {
+  .directive('uibTypeaheadMatch', ['$templateRequest', '$compile', '$parse', 'uibTemplatePath', 
+      function($templateRequest, $compile, $parse, uibTemplatePath) {
     return {
       scope: {
         index: '=',
@@ -656,7 +657,7 @@ angular.module('ui.bootstrap.typeahead', ['ui.bootstrap.debounce', 'ui.bootstrap
         query: '='
       },
       link: function(scope, element, attrs) {
-        var tplUrl = $parse(attrs.templateUrl)(scope.$parent) || 'uib/template/typeahead/typeahead-match.html';
+        var tplUrl = $parse(attrs.templateUrl)(scope.$parent) || (uibTemplatePath + 'typeahead/typeahead-match.html');
         $templateRequest(tplUrl).then(function(tplContent) {
           var tplEl = angular.element(tplContent.trim());
           element.replaceWith(tplEl);

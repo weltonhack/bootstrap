@@ -684,25 +684,25 @@ function ($animate, $sce, $compile, $templateRequest) {
   };
 }])
 
-.directive('uibTooltipPopup', function() {
+.directive('uibTooltipPopup', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     restrict: 'A',
     scope: { content: '@' },
-    templateUrl: 'uib/template/tooltip/tooltip-popup.html'
+    templateUrl: uibTemplatePath + 'tooltip/tooltip-popup.html'
   };
-})
+}])
 
 .directive('uibTooltip', [ '$uibTooltip', function($uibTooltip) {
   return $uibTooltip('uibTooltip', 'tooltip', 'mouseenter');
 }])
 
-.directive('uibTooltipTemplatePopup', function() {
+.directive('uibTooltipTemplatePopup', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     restrict: 'A',
     scope: { contentExp: '&', originScope: '&' },
-    templateUrl: 'uib/template/tooltip/tooltip-template-popup.html'
+    templateUrl: uibTemplatePath + 'tooltip/tooltip-template-popup.html'
   };
-})
+}])
 
 .directive('uibTooltipTemplate', ['$uibTooltip', function($uibTooltip) {
   return $uibTooltip('uibTooltipTemplate', 'tooltip', 'mouseenter', {
@@ -710,13 +710,13 @@ function ($animate, $sce, $compile, $templateRequest) {
   });
 }])
 
-.directive('uibTooltipHtmlPopup', function() {
+.directive('uibTooltipHtmlPopup', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     restrict: 'A',
     scope: { contentExp: '&' },
-    templateUrl: 'uib/template/tooltip/tooltip-html-popup.html'
+    templateUrl: uibTemplatePath + 'tooltip/tooltip-html-popup.html'
   };
-})
+}])
 
 .directive('uibTooltipHtml', ['$uibTooltip', function($uibTooltip) {
   return $uibTooltip('uibTooltipHtml', 'tooltip', 'mouseenter', {

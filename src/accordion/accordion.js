@@ -42,25 +42,25 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse', 'ui.bootstrap
 
 // The accordion directive simply sets up the directive controller
 // and adds an accordion CSS class to itself element.
-.directive('uibAccordion', function() {
+.directive('uibAccordion', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     controller: 'UibAccordionController',
     controllerAs: 'accordion',
     transclude: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/accordion/accordion.html';
+      return attrs.templateUrl || (uibTemplatePath + 'accordion/accordion.html');
     }
   };
-})
+}])
 
 // The accordion-group directive indicates a block of html that will expand and collapse in an accordion
-.directive('uibAccordionGroup', function() {
+.directive('uibAccordionGroup', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     require: '^uibAccordion',         // We need this directive to be inside an accordion
     transclude: true,              // It transcludes the contents of the directive into the template
     restrict: 'A',
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/accordion/accordion-group.html';
+      return attrs.templateUrl || (uibTemplatePath + 'accordion/accordion-group.html');
     },
     scope: {
       heading: '@',               // Interpolate the heading attribute onto this scope
@@ -99,7 +99,7 @@ angular.module('ui.bootstrap.accordion', ['ui.bootstrap.collapse', 'ui.bootstrap
       scope.panelId = id + '-panel';
     }
   };
-})
+}])
 
 // Use accordion-heading below an accordion-group to provide a heading containing HTML
 .directive('uibAccordionHeading', function() {

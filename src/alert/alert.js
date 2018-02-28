@@ -18,17 +18,17 @@ angular.module('ui.bootstrap.alert', [])
   }
 }])
 
-.directive('uibAlert', function() {
+.directive('uibAlert', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     controller: 'UibAlertController',
     controllerAs: 'alert',
     restrict: 'A',
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/alert/alert.html';
+      return attrs.templateUrl || (uibTemplatePath + 'alert/alert.html');
     },
     transclude: true,
     scope: {
       close: '&'
     }
   };
-});
+}]);

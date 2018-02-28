@@ -2,25 +2,27 @@ angular.module('ui.bootstrap.datepickerPopup', ['ui.bootstrap.datepicker', 'ui.b
 
 .value('$datepickerPopupLiteralWarning', true)
 
-.constant('uibDatepickerPopupConfig', {
-  altInputFormats: [],
-  appendToBody: false,
-  clearText: 'Clear',
-  closeOnDateSelection: true,
-  closeText: 'Done',
-  currentText: 'Today',
-  datepickerPopup: 'yyyy-MM-dd',
-  datepickerPopupTemplateUrl: 'uib/template/datepickerPopup/popup.html',
-  datepickerTemplateUrl: 'uib/template/datepicker/datepicker.html',
-  html5Types: {
-    date: 'yyyy-MM-dd',
-    'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
-    'month': 'yyyy-MM'
-  },
-  onOpenFocus: true,
-  showButtonBar: true,
-  placement: 'auto bottom-left'
-})
+.factory('uibDatepickerPopupConfig', ['uibTemplatePath', function(uibTemplatePath) {
+        return {
+            altInputFormats: [],
+            appendToBody: false,
+            clearText: 'Clear',
+            closeOnDateSelection: true,
+            closeText: 'Done',
+            currentText: 'Today',
+            datepickerPopup: 'yyyy-MM-dd',
+            datepickerPopupTemplateUrl: uibTemplatePath + 'datepickerPopup/popup.html',
+            datepickerTemplateUrl: uibTemplatePath + 'datepicker/datepicker.html',
+            html5Types: {
+              date: 'yyyy-MM-dd',
+              'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+              'month': 'yyyy-MM'
+            },
+            onOpenFocus: true,
+            showButtonBar: true,
+            placement: 'auto bottom-left'
+        };
+}])
 
 .controller('UibDatepickerPopupController', ['$scope', '$element', '$attrs', '$compile', '$log', '$parse', '$window', '$document', '$rootScope', '$uibPosition', 'dateFilter', 'uibDateParser', 'uibDatepickerPopupConfig', '$timeout', 'uibDatepickerConfig', '$datepickerPopupLiteralWarning',
 function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $rootScope, $position, dateFilter, dateParser, datepickerPopupConfig, $timeout, datepickerConfig, $datepickerPopupLiteralWarning) {
@@ -139,6 +141,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
       $scope.date = parseDateString(ngModel.$viewValue);
     });
 
+    $element.on('click', inputClickBind);
     $element.on('keydown', inputKeydownBind);
 
     $popup = $compile(popupEl)($scope);
@@ -161,6 +164,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
       }
 
       $popup.remove();
+      $element.off('click', inputClickBind);
       $element.off('keydown', inputKeydownBind);
       $document.off('click', documentClickBind);
       if (scrollParentEl) {
@@ -378,7 +382,17 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
       });
     }
   }
-
+  
+  function inputClickBind(evt) {
+    if (!$scope.isOpen && $scope.clickOpen && !$scope.disabled) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      $scope.$apply(function() {
+        $scope.isOpen = true;
+      });
+    }
+  }
+  
   function inputKeydownBind(evt) {
     if (evt.which === 27 && $scope.isOpen) {
       evt.preventDefault();
@@ -442,6 +456,7 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
     scope: {
       datepickerOptions: '=?',
       isOpen: '=?',
+      clickOpen: '=?',
       currentText: '@',
       clearText: '@',
       closeText: '@'
@@ -455,12 +470,12 @@ function($scope, $element, $attrs, $compile, $log, $parse, $window, $document, $
   };
 })
 
-.directive('uibDatepickerPopupWrap', function() {
+.directive('uibDatepickerPopupWrap', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     restrict: 'A',
     transclude: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepickerPopup/popup.html';
+      return attrs.templateUrl || (uibTemplatePath + 'datepickerPopup/popup.html');
     }
   };
-});
+}]);

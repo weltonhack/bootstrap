@@ -13,7 +13,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.paging', 'ui.bootstrap.tabin
   align: true
 })
 
-.directive('uibPager', ['uibPagerConfig', function(uibPagerConfig) {
+.directive('uibPager', ['uibPagerConfig', 'uibTemplatePath', function(uibPagerConfig, uibTemplatePath) {
   return {
     scope: {
       totalItems: '=',
@@ -26,7 +26,7 @@ angular.module('ui.bootstrap.pager', ['ui.bootstrap.paging', 'ui.bootstrap.tabin
     controller: 'UibPagerController',
     controllerAs: 'pager',
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/pager/pager.html';
+      return attrs.templateUrl || (uibTemplatePath + 'pager/pager.html');
     },
     link: function(scope, element, attrs, ctrls) {
       element.addClass('pager');

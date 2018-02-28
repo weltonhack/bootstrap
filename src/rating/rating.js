@@ -87,7 +87,7 @@ angular.module('ui.bootstrap.rating', [])
   };
 }])
 
-.directive('uibRating', function() {
+.directive('uibRating', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     require: ['uibRating', 'ngModel'],
     restrict: 'A',
@@ -97,10 +97,10 @@ angular.module('ui.bootstrap.rating', [])
       onLeave: '&'
     },
     controller: 'UibRatingController',
-    templateUrl: 'uib/template/rating/rating.html',
+    templateUrl: uibTemplatePath + 'rating/rating.html',
     link: function(scope, element, attrs, ctrls) {
       var ratingCtrl = ctrls[0], ngModelCtrl = ctrls[1];
       ratingCtrl.init(ngModelCtrl);
     }
   };
-});
+}]);

@@ -1,18 +1,20 @@
 angular.module('ui.bootstrap.timepicker', [])
 
-.constant('uibTimepickerConfig', {
-  hourStep: 1,
-  minuteStep: 1,
-  secondStep: 1,
-  showMeridian: true,
-  showSeconds: false,
-  meridians: null,
-  readonlyInput: false,
-  mousewheel: true,
-  arrowkeys: true,
-  showSpinners: true,
-  templateUrl: 'uib/template/timepicker/timepicker.html'
-})
+.factory('uibTimepickerConfig', ['uibTemplatePath', function(uibTemplatePath) { 
+        return {
+            hourStep: 1,
+            minuteStep: 1,
+            secondStep: 1,
+            showMeridian: true,
+            showSeconds: false,
+            meridians: null,
+            readonlyInput: false,
+            mousewheel: true,
+            arrowkeys: true,
+            showSpinners: true,
+            templateUrl: uibTemplatePath + 'timepicker/timepicker.html'
+        };
+}])
 
 .controller('UibTimepickerController', ['$scope', '$element', '$attrs', '$parse', '$log', '$locale', 'uibTimepickerConfig', function($scope, $element, $attrs, $parse, $log, $locale, timepickerConfig) {
   var hoursModelCtrl, minutesModelCtrl, secondsModelCtrl;

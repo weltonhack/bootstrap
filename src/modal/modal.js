@@ -74,8 +74,8 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
     }
   }])
 
-  .directive('uibModalWindow', ['$uibModalStack', '$q', '$animateCss', '$document',
-  function($modalStack, $q, $animateCss, $document) {
+  .directive('uibModalWindow', ['$uibModalStack', '$q', '$animateCss', '$document', 'uibTemplatePath',
+  function($modalStack, $q, $animateCss, $document, uibTemplatePath) {
     return {
       scope: {
         index: '@'
@@ -83,7 +83,7 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.multiMap', 'ui.bootstrap.sta
       restrict: 'A',
       transclude: true,
       templateUrl: function(tElement, tAttrs) {
-        return tAttrs.templateUrl || 'uib/template/modal/window.html';
+        return tAttrs.templateUrl || (uibTemplatePath + 'modal/window.html');
       },
       link: function(scope, element, attrs) {
         element.addClass(attrs.windowTopClass || '');

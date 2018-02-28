@@ -612,10 +612,10 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
   };
 }])
 
-.directive('uibDatepicker', function() {
+.directive('uibDatepicker', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/datepicker.html';
+      return attrs.templateUrl || (uibTemplatePath + 'datepicker/datepicker.html');
     },
     scope: {
       datepickerOptions: '=?'
@@ -630,12 +630,12 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       datepickerCtrl.init(ngModelCtrl);
     }
   };
-})
+}])
 
-.directive('uibDaypicker', function() {
+.directive('uibDaypicker', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/day.html';
+      return attrs.templateUrl || (uibTemplatePath + 'datepicker/day.html');
     },
     require: ['^uibDatepicker', 'uibDaypicker'],
     restrict: 'A',
@@ -647,12 +647,12 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       daypickerCtrl.init(datepickerCtrl);
     }
   };
-})
+}])
 
-.directive('uibMonthpicker', function() {
+.directive('uibMonthpicker', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/month.html';
+      return attrs.templateUrl || (uibTemplatePath + 'datepicker/month.html');
     },
     require: ['^uibDatepicker', 'uibMonthpicker'],
     restrict: 'A',
@@ -664,12 +664,12 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       monthpickerCtrl.init(datepickerCtrl);
     }
   };
-})
+}])
 
-.directive('uibYearpicker', function() {
+.directive('uibYearpicker', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/datepicker/year.html';
+      return attrs.templateUrl || (uibTemplatePath + 'datepicker/year.html');
     },
     require: ['^uibDatepicker', 'uibYearpicker'],
     restrict: 'A',
@@ -682,4 +682,4 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
       ctrl.refreshView();
     }
   };
-});
+}]);

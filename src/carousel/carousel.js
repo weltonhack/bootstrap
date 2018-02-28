@@ -258,14 +258,14 @@ angular.module('ui.bootstrap.carousel', [])
   }
 }])
 
-.directive('uibCarousel', function() {
+.directive('uibCarousel', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     transclude: true,
     controller: 'UibCarouselController',
     controllerAs: 'carousel',
     restrict: 'A',
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/carousel/carousel.html';
+      return attrs.templateUrl || (uibTemplatePath + 'carousel/carousel.html');
     },
     scope: {
       active: '=',
@@ -275,15 +275,15 @@ angular.module('ui.bootstrap.carousel', [])
       noWrap: '&'
     }
   };
-})
+}])
 
-.directive('uibSlide', ['$animate', function($animate) {
+.directive('uibSlide', ['$animate', 'uibTemplatePath', function($animate, uibTemplatePath) {
   return {
     require: '^uibCarousel',
     restrict: 'A',
     transclude: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/carousel/slide.html';
+      return attrs.templateUrl || (uibTemplatePath + 'carousel/slide.html');
     },
     scope: {
       actual: '=?',

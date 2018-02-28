@@ -96,7 +96,7 @@ angular.module('ui.bootstrap.tabs', [])
   }
 }])
 
-.directive('uibTabset', function() {
+.directive('uibTabset', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     transclude: true,
     replace: true,
@@ -108,7 +108,7 @@ angular.module('ui.bootstrap.tabs', [])
     controller: 'UibTabsetController',
     controllerAs: 'tabset',
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/tabs/tabset.html';
+      return attrs.templateUrl || (uibTemplatePath + 'tabs/tabset.html');
     },
     link: function(scope, element, attrs) {
       scope.vertical = angular.isDefined(attrs.vertical) ?
@@ -117,14 +117,14 @@ angular.module('ui.bootstrap.tabs', [])
         scope.$parent.$eval(attrs.justified) : false;
     }
   };
-})
+}])
 
-.directive('uibTab', ['$parse', function($parse) {
+.directive('uibTab', ['$parse', 'uibTemplatePath', function($parse, uibTemplatePath) {
   return {
     require: '^uibTabset',
     replace: true,
     templateUrl: function(element, attrs) {
-      return attrs.templateUrl || 'uib/template/tabs/tab.html';
+      return attrs.templateUrl || (uibTemplatePath + 'tabs/tab.html');
     },
     transclude: true,
     scope: {

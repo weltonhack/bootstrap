@@ -63,7 +63,7 @@ angular.module('ui.bootstrap.progressbar', [])
   }
 }])
 
-.directive('uibProgress', function() {
+.directive('uibProgress', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     replace: true,
     transclude: true,
@@ -72,11 +72,11 @@ angular.module('ui.bootstrap.progressbar', [])
     scope: {
       maxParam: '=?max'
     },
-    templateUrl: 'uib/template/progressbar/progress.html'
+    templateUrl: uibTemplatePath + 'progressbar/progress.html'
   };
-})
+}])
 
-.directive('uibBar', function() {
+.directive('uibBar', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     replace: true,
     transclude: true,
@@ -85,14 +85,14 @@ angular.module('ui.bootstrap.progressbar', [])
       value: '=',
       type: '@'
     },
-    templateUrl: 'uib/template/progressbar/bar.html',
+    templateUrl: uibTemplatePath + 'progressbar/bar.html',
     link: function(scope, element, attrs, progressCtrl) {
       progressCtrl.addBar(scope, element, attrs);
     }
   };
-})
+}])
 
-.directive('uibProgressbar', function() {
+.directive('uibProgressbar', ['uibTemplatePath', function(uibTemplatePath) {
   return {
     replace: true,
     transclude: true,
@@ -102,9 +102,9 @@ angular.module('ui.bootstrap.progressbar', [])
       maxParam: '=?max',
       type: '@'
     },
-    templateUrl: 'uib/template/progressbar/progressbar.html',
+    templateUrl: uibTemplatePath + 'progressbar/progressbar.html',
     link: function(scope, element, attrs, progressCtrl) {
       progressCtrl.addBar(scope, angular.element(element.children()[0]), {title: attrs.title});
     }
   };
-});
+}]);
